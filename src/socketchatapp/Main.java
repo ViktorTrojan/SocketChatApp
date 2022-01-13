@@ -152,12 +152,12 @@ public class Main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void disableAll() {
-        NAME.setEnabled(false);
-        IP.setEnabled(false);
-        PORT.setEnabled(false);
-        JOIN.setEnabled(false);
-        STARTSERVER.setEnabled(false);
+    public void switchAll(boolean flag) {
+        NAME.setEnabled(flag);
+        IP.setEnabled(flag);
+        PORT.setEnabled(flag);
+        JOIN.setEnabled(flag);
+        STARTSERVER.setEnabled(flag);
     }
 
     public void addMessage(String msg) {
@@ -169,12 +169,16 @@ public class Main extends javax.swing.JFrame {
     }
 
     private void JOINActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JOINActionPerformed
-        disableAll();
+        if(getNAME().isEmpty()){
+            addMessage("[!] Please Enter a Name!");
+            return;
+        }
+        switchAll(false);
         client = new Client(IP.getText(), Integer.parseInt(PORT.getText()));
     }//GEN-LAST:event_JOINActionPerformed
 
     private void STARTSERVERActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_STARTSERVERActionPerformed
-        disableAll();
+        switchAll(false);
         isServer = true;
         server = new Server(Integer.parseInt(PORT.getText()));
         //PLAYERCOUNT.setText("1/10");

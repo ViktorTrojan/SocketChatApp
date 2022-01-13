@@ -1,8 +1,6 @@
 package socketchatapp;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Scanner;
 
 public class UserManager implements Runnable {
 
@@ -21,13 +19,16 @@ public class UserManager implements Runnable {
     }
 
     public void run() {
-        try {
-            String res;
-            while ((res = user.in.readLine()) != null) {
-                receivedMSG(res);
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
+        String res;
+        Scanner sc = new Scanner(user.in);
+        while (sc.hasNextLine()) {
+            res = sc.nextLine();
+            receivedMSG(res);
         }
+
+        // end of Thread
+        server.removeUser(user);
+        //server.broadcastAllUsers();
+        sc.close();
     }
 }

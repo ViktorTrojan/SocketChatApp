@@ -1,7 +1,6 @@
 package socketchatapp;
 
 import java.io.IOException;
-import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,6 +17,19 @@ public class Server extends Network {
         }).start();
     }
 
+    public void removeUser(User user) {
+        Main.instance.addMessage("User Left: " + user.name);
+        
+        for (User client : clients) {
+            if (client.equals(user)) {
+                continue;
+            }
+            client.out.println("User Left: " + user.name);
+        }
+        
+        clients.remove(user);
+    }
+
     public void sendMSG(String msg, User user) {
         for (User client : clients) {
             if (client.equals(user)) {
@@ -26,10 +38,10 @@ public class Server extends Network {
             client.out.println(user.name + ": " + msg);
         }
     }
-    
+
     public void sendMSG(String msg) {
         for (User client : clients) {
-            client.out.println("GODLESSFATHER: " + msg);
+            client.out.println("SERVER: " + msg);
         }
     }
 
@@ -54,9 +66,11 @@ public class Server extends Network {
                 openSocket();
                 initStreams();
                 String userName = in.readLine();
+                
                 User user = new User(socket, userName);
                 clients.add(user);
 
+                Main.instance.addMessage("User Joined: " + userName);
                 broadcastMSG("User Joined: " + userName, user);
 
                 new Thread(new UserManager(this, user)).start();

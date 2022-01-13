@@ -32,17 +32,6 @@ public class Network {
         }
     }
 
-    public void listener() {
-        try {
-            String res;
-            while ((res = in.readLine()) != null) {
-                receivedMSG(res);
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     public void openServerSocket() {
         try {
             serverSocket = new ServerSocket(port);
@@ -73,9 +62,5 @@ public class Network {
         } catch (IOException ex) {
             Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public void receivedMSG(String s) {
-        System.out.println("MSG: " + s);
     }
 }
