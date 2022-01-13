@@ -20,3 +20,5 @@ This Socket Chat App is inspired by other Chat Applications like ``Discord, What
 ## Authors
 
 People contributed to this Project
+
+[@ViktorTrojan](https://github.com/ViktorTrojan)
